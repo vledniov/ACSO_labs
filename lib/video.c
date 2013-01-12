@@ -1,6 +1,6 @@
-void putc(unsigned char c, int i) {
-  char* vidmem = (char*) 0xb8000;
-  vidmem[i] = c;
-  vidmem[i] = 0x07;
-  i+=2;
+void putc (char* vidmem, int pos, char c)
+{
+  vidmem[pos] = c;
+  vidmem[pos+1] = 0x7;
+  pos += 2;
 }

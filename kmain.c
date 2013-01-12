@@ -2,9 +2,12 @@
 #include "lib/io.c"
 #include "lib/kbd.c"
 
-pos = 0;
+int pos = 2;
 
 int main( void )
-{
-  for(;;) putc(getchar(), pos);
+{  
+  char* vidmem = (char *) 0xb8000;
+  vidmem[0] = '~';
+  vidmem[1] = 0x7;
+  for(;;) putc(vidmem, pos+=2, getchar());
 }
