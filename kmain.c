@@ -1,6 +1,7 @@
 #include "lib/video.c"
 #include "lib/io.c"
 #include "lib/kbd.c"
+#include "lib/longjmp.c"
 
 int main( void )
 {  
