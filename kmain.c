@@ -16,13 +16,12 @@ int main( void )
     pos = typer(vidmem, pos, str);
     line++;
     pos = line*160;
-    if(compare(str, "greet")) cmd_greet(vidmem, pos);
-    if(line==8){
+    if(compare(str, "greet")){pos = cmd_greet(vidmem, pos);line++;}
+    if(line==15){
       pos = clrscr(vidmem);
       line = 0;
       pos = typer(vidmem, pos, str);
     }
-
   }
   return 0;
 }
