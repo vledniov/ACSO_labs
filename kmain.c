@@ -6,16 +6,17 @@ int main( void )
 {  
   char* vidmem = (char *) 0xb8000;
   char* str;
+  int pos = 2;
   int line=0;
   vidmem[0] = '~';
   vidmem[1] = 0x7;
-  int pos = 2;
   for(;;)
   {
     str = gets(vidmem, pos);
     pos = typer(vidmem, pos, str);
     line++;
     pos = line*160;
+    if(compare(str, "greet")) cmd_greet(vidmem, pos);
     if(line==8){
       pos = clrscr(vidmem);
       line = 0;
@@ -38,4 +39,16 @@ int gets(char* vidmem, int position) {
   }
   string[i] = '\0';
   return string;
+}
+
+int compare(char* a, char* b){
+  int c = 0;
+  while(a[c] == b[c]){
+      if(a[c] == '\0' || b[c] == '\0') break;
+      c++;
+    }
+  if(a[c] == '\0' && b[c] == '\0')
+    return 1;
+  else
+    return 0;
 }
