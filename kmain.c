@@ -2,20 +2,40 @@
 #include "lib/io.c"
 #include "lib/kbd.c"
 
-int pos = 2;
-
 int main( void )
 {  
   char* vidmem = (char *) 0xb8000;
+  char* str;
+  int line=0;
   vidmem[0] = '~';
   vidmem[1] = 0x7;
+  int pos = 2;
   for(;;)
   {
-    char c = getchar();
-    putc(vidmem, pos+=2, c);
-    if (c == '\n') {
-      puts(vidmem, pos);
-      pos = 320;
+    str = gets(vidmem, pos);
+    pos = typer(vidmem, pos, str);
+    line++;
+    pos = line*160;
+    if(line==8){
+      pos = clrscr(vidmem);
+      line = 0;
+      pos = typer(vidmem, pos, str);
     }
+
   }
+  return 0;
+}
+
+int gets(char* vidmem, int position) {
+  char* string;
+  int i;
+  char c;
+  for(i=0;;i++){
+    c = getchar();
+    if (c == '\n') break;
+    position = putc(vidmem, position, c);
+    string[i] = c;
+  }
+  string[i] = '\0';
+  return string;
 }
