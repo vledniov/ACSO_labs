@@ -1,12 +1,14 @@
 bits 32
 extern main
 global start
-global setjmp
 
 start:
   call main ; Call our kernel's main() function
   cli        ; Stop interrupts (thats another article?)
   hlt        ; Stop all instructions
+
+
+global setjmp
 
 setjmp:
   push ebx

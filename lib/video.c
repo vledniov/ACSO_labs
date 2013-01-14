@@ -1,32 +1,57 @@
-int putc (char* vidmem, int pos, char c)
-{
-  vidmem[pos] = c;
-  vidmem[pos+1] = 0x7;
-  return pos+2;
+//#include "kbd.c"
+
+int i=0;
+// 1 line 160
+void setNewLine( ){
+  i+=160-(i%160);
 }
 
-int puts (char* vidmem, char* str, int pos)
-{
-  int i=0;
-  while(str[i] != '\0'){
-    pos = putc(vidmem, pos, str[i]);
-    i++;
+int getIndex(){
+  return i;
+}
+void resetIndex(){
+i=0;
+}
+int getLine(){
+  int line;
+  line =( i /160);
+  return line;
+}
+
+void putc (char c) {
+  char* vidmem = (char *) 0xb8000;
+  vidmem[i] = c;
+  i++;
+  vidmem[i] = 0x7;
+  i++;
+}
+
+void puts(char *c){
+  int index =0;
+  char* vidmem = (char*) 0xb8000;
+
+ while(*c != '\0'){
+ putc(*c);
+ c++;
+ }
+
+}
+
+void clrscr(){
+ char* vidmem = (char *) 0xb8000;
+
+  for(;i>=0;i--){
+  vidmem[i] = ' ';
+  
+  i--;
   }
-  return pos;
 }
 
-int clrscr(char* vidmem)
-{
-  int i;
-  for(i=0;i<=1120;i+=2){
-    vidmem[i] = 0;
-    vidmem[i+1] = 0xF;
+void downScroll(){
+  char* vidmem = (char*) 0xb8000;
+  int k=1;
+  for(k; k<3860;k++){
+    vidmem[k] = vidmem[(k+160)];
   }
-  return 0;
-}
 
-int typer(char* vidmem, int pos, char* string){
-  pos = puts(vidmem, "You typed: ", pos);
-  pos = puts(vidmem, string, pos);
-  return pos;
 }
