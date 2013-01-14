@@ -39,7 +39,7 @@ int _sched_num_tasks = 0;
 
 void wait (void) {
    int i=0;
-   while ( i<99999999)
+   while ( i<100000)
    {
     i++;
    };  

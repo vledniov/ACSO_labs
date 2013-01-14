@@ -2,22 +2,6 @@
 
 int i=0;
 // 1 line 160
-void setNewLine( ){
-  i+=160-(i%160);
-}
-
-int getIndex(){
-  return i;
-}
-void resetIndex(){
-i=0;
-}
-int getLine(){
-  int line;
-  line =( i /160);
-  return line;
-}
-
 void putc (char c) {
   char* vidmem = (char *) 0xb8000;
   vidmem[i] = c;
